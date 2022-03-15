@@ -22,7 +22,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "SwiftGenBinary",
-            path: "https://github.com/nicorichard/SwiftGenPlugin/releases/download/0.0.1/SwiftGenBinary.artifactbundle.zip"
+            url: "https://github.com/nicorichard/SwiftGenPlugin/releases/download/0.0.1/SwiftGenBinary.artifactbundle.zip",
+            checksum: "1bfd5e100412f41c3d5502c51569922cbb7d302c17562d574b821d0550b1df2c"
         ),
     ]
 )
