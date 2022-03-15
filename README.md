@@ -4,10 +4,16 @@ A remote built tool plugin [SE-0325](https://github.com/apple/swift-evolution/bl
 
 ## Questions
 
-- It's still unclear to me how to properly package a command line tool such as SwiftGen as a `.artifactbundle`
-- I'm interested to know the best way to store and distribute swift pre-built artifacts
+If anyone can help answer these questions please open an issue or [use my contact information](https://github.com/nicorichard).
+
+- It's unclear to me how to properly package a command line tool such as SwiftGen as a `.artifactbundle`
+  - Emailed @abertelrud for more info
+- What is the best way to store and distribute swift pre-built artifacts?
   - For the purposes of this repository I've included a `.zip` with the Github release artifacts
     - This is tricky because the tagged code must reference the version from the release before it is created
+- How is cleanup supposed to be handled for build tools?
+  - e.g. If I change the name of my expected generated SwiftGen file, both the old file and the new will be in the generated outputs
+  - I've tried running deletions from `createBuildCommands` but they tend to not run out of sync and unpredictably
 
 ## Usage
 
