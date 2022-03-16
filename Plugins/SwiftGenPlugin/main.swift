@@ -29,6 +29,10 @@ struct SwiftGenPlugin: BuildToolPlugin {
         }
         let path: Path = fullPackageConfig(context) ?? target.directory.appending(swiftGenConfigFilename)
 
+        if !fileManager.fileExists(atPath: path.string) {
+            Diagnostics.error("No `swiftgen.yml` found for target \(target.name).")
+        }
+
         // Return a command to run `swiftgen` as a prebuild command. It will be run before
         // every build and generates source files into an output directory provided by the
         // build context.
