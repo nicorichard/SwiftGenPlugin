@@ -23,7 +23,9 @@ struct SwiftGenPlugin: BuildToolPlugin {
                 fileManager.fileExists(atPath: $0.string)
             }
 
-        Diagnostics.remark("No SwiftGen configurations found for target \(target.name). If you would like to generate sources for this target include a `swiftgen.yml` in the target's source directory, or include a shared `swiftgen.yml` at the package's root.")
+        if paths.isEmpty {
+            Diagnostics.remark("No SwiftGen configurations found for target \(target.name). If you would like to generate sources for this target include a `swiftgen.yml` in the target's source directory, or include a shared `swiftgen.yml` at the package's root.")
+        }
 
         // Return a command to run `swiftgen` as a prebuild command. It will be run before
         // every build and generates source files into an output directory provided by the
