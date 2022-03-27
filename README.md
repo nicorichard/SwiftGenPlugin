@@ -21,10 +21,12 @@ If anyone can help answer these questions please open an issue or [use my contac
 
 ## Usage
 
-Include the following in your `Package.swift`
+### Adding the plugin
+
+Add the dependency to your `Package.swift` and include the plugin on any targets for which you would like it to run
 
 ```swift
-dependencies: [
+    dependencies: [
         .package(url: "https://github.com/nicorichard/SwiftGenPlugin", exact: "6.5.1")
     ],
     targets: [
@@ -38,4 +40,13 @@ dependencies: [
     ]
 ```
 
-and add a `swiftgen.yml` ([Example](swiftgen.yml)) to the root of your package (same folder as `Package.swift`).
+### Swiftgen.yml
+
+The plugin offers two options for the `swiftgen.yml` file to support multiple-target packages. If you are only concerned with one target there is no difference between the two options.
+
+1. Add a `swiftgen.yml` ([Example](swiftgen.yml)) to the root of your package (same folder as `Package.swift`), and swiftgen will be run **for all targets which support the plugin**
+2. Add a `swiftgen.yml` ([Example](swiftgen.yml)) to your target's sources, swiftgen will be run for only this target
+
+Both 1 & 2 can be combined if desired. However, if there is any duplicate files between the two methods the more specific target files will be used (method #2).
+
+
