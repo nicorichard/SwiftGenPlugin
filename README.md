@@ -4,7 +4,7 @@ A remote built tool plugin [SE-0325](https://github.com/apple/swift-evolution/bl
 
 ## Warning
 
-This project is for demonstration and research purposes only
+This project is intended for demonstration and research purposes only.
 
 ## Questions
 
@@ -25,7 +25,7 @@ Include the following in your `Package.swift`
 
 ```swift
 dependencies: [
-        .package(url: "https://github.com/nicorichard/SwiftGenPlugin", exact: "6.4.0")
+        .package(url: "https://github.com/nicorichard/SwiftGenPlugin", exact: "6.5.1")
     ],
     targets: [
         .target(
