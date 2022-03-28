@@ -13,7 +13,7 @@ let package = Package(
             name: "SwiftGenPlugin",
             capability: .buildTool(),
             dependencies: [
-                "SwiftGenBinary"
+                "swiftgen"
             ]
         ),
         .executableTarget(
@@ -21,9 +21,9 @@ let package = Package(
             plugins: ["SwiftGenPlugin"]
         ),
         .binaryTarget(
-            name: "SwiftGenBinary",
-            url: "https://github.com/nicorichard/SwiftGenPlugin/releases/download/6.5.1/SwiftGenBinary.artifactbundle.zip",
-            checksum: "5f2948f251baac0e2ae70094c597e8a4eb5633ac1a04b0a73da8e3ac50d9c9c8"
+            name: "swiftgen",
+            url: "https://github.com/nicorichard/SwiftGen/releases/download/6.5.1/swiftgen.artifactbundle.zip",
+            checksum: "a8e445b41ac0fd81459e07657ee19445ff6cbeef64eb0b3df51637b85f925da8"
         ),
     ]
 )
