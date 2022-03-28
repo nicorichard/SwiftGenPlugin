@@ -5,6 +5,7 @@ A remote built tool plugin [SE-0325](https://github.com/apple/swift-evolution/bl
 ## Warning
 
 This project is intended for demonstration and research purposes only.
+Check out the accompanying [PR to SwiftGen](https://github.com/SwiftGen/SwiftGen/pull/926).
 
 ## Usage
 
@@ -36,10 +37,15 @@ The plugin offers two options for the `swiftgen.yml` file to support multiple-ta
 
 Both 1 & 2 can be combined if desired. However, if there is any duplicate files between the two methods the more specific target files will be used (method #2).
 
-## Questions
+## Issues
 
-If anyone can help answer these questions please open an issue or [use my contact information](https://github.com/nicorichard).
+At the moment the plugin is quite good at the typical use case. The correct files are generated, and new versions of the files are overwritten.
+However, the plugin is not good at cleaning up files in the event that you decide to change a generated file's name or stop to generate it. In these cases you may need to manually remove the previously generated files from DerivedData or run `File -> Packages -> Clear Package Caches`.
+
+**Question:**
 
 - How is cleanup supposed to be handled for build tools?
   - e.g. If I change the name of my expected generated SwiftGen file, both the old file and the new will be in the generated outputs
   - I've tried running deletions from `createBuildCommands` but they tend to not run out of sync and unpredictably
+
+If anyone can help answer these questions please open an issue or [use my contact information](https://github.com/nicorichard).
