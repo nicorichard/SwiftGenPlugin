@@ -5,20 +5,40 @@ let package = Package(
     name: "SwiftGenPlugin",
     defaultLocalization: "en",
     products: [
-        .plugin(name: "SwiftGenPlugin", targets: ["SwiftGenPlugin"])
+        .plugin(name: "SwiftGenBuildPlugin", targets: ["BuildTool"]),
+        .plugin(name: "SwiftGenCommandPlugin", targets: ["Run SwiftGen"])
     ],
     dependencies: [],
     targets: [
         .plugin(
-            name: "SwiftGenPlugin",
+            name: "BuildTool",
             capability: .buildTool(),
             dependencies: [
                 "swiftgen"
             ]
         ),
+        .plugin(
+            name: "Run SwiftGen",
+            capability: .command(
+                intent: .custom(
+                    verb: "swiftgen",
+                    description: "Generate Swift code for this package's resources."
+                ),
+                permissions: [
+                  .writeToPackageDirectory(reason: "To generate Swift code for this package's resources.")
+                ]
+            ),
+            dependencies: ["swiftgen"]
+        ),
         .executableTarget(
-            name: "Example",
-            plugins: ["SwiftGenPlugin"]
+            name: "BuildToolExample",
+            exclude: ["Resources/swiftgen.yml"],
+            plugins: ["BuildTool"]
+        ),
+        .executableTarget(
+            name: "CommandExample",
+            exclude: ["Resources/swiftgen.yml"],
+            plugins: ["Run SwiftGen"]
         ),
         .binaryTarget(
             name: "swiftgen",
