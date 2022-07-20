@@ -6,11 +6,11 @@ Uses the remote build tool plugin [SE-0325](https://github.com/apple/swift-evolu
 
 ## Attention
 
-Until my [PR to SwiftGen](https://github.com/SwiftGen/SwiftGen/pull/926) is merged the SwiftGen binary for this plugin is pulled from my [fork of SwiftGen](https://github.com/nicorichard/SwiftGen/).
+Until my [PR to SwiftGen](https://github.com/SwiftGen/SwiftGen/pull/926) is merged, the SwiftGen binary for this plugin is pulled from my [fork of SwiftGen](https://github.com/nicorichard/SwiftGen/).
 
 ## Usage
 
-### Adding the plugin
+### Adding The Plugin
 
 Add the dependency to your `Package.swift` and include the plugin on any targets for which you would like it to run
 
@@ -35,17 +35,7 @@ Add a `swiftgen.yml` file to your project following the [configuration file form
 
 Take a look at this repository's [swiftgen.yml](./swiftgen.yml) for an example.
 
-## Warning
-
-In the event that you change a generated file's name or stop generating a file it will not be automatically removed from your application's Derived Data.
-e.g. If I change the name of my generated SwiftGen file, both the old file and the new will be present in the generated outputs.
-The files can be manually removed from the file system or cleared via `Clear Package Caches`.
-
-#### Help me improve this
-Can a better strategy be implemented which allows for the cleanup of old files?
-If you know the answer to this question please open an issue, pull request, or [message me](https://github.com/nicorichard).
-
-### Supporting multiple targets
+### Supporting Multiple Targets
 
 The plugin offers two options for the `swiftgen.yml` file to support multiple-target packages. If you are only concerned with one target there is no difference between the two options.
 
@@ -53,3 +43,8 @@ The plugin offers two options for the `swiftgen.yml` file to support multiple-ta
 2. Add a `swiftgen.yml` ([Example](swiftgen.yml)) to your target's sources, swiftgen will be run for only this target
 
 Both 1 & 2 can be combined if desired. However, if there is any duplicate files between the two methods the more specific target files will be used (method #2).
+
+## Known Issues
+
+- Transitive dependencies of your package do not run the build tool. [Swift Forums Discussion](https://forums.swift.org/t/plugin-command-not-running-when-package-is-indirectly-included-in-xcode-project/57168).
+  - [Minimal Reproducible Example](https://github.com/nicorichard/PluginNotRunning)
