@@ -17,7 +17,7 @@ struct SwiftGenBuildPlugin: BuildToolPlugin {
         // In addition, if a `swiftgen.yml` is present in the root directory of any target's source files it will be used to generate sources for that target only.
         let paths: [Path] = [
             context.package.directory.appending(swiftGenConfigFilename),
-            target.directory.appending("Resources").appending(swiftGenConfigFilename)
+            target.directory.appending(swiftGenConfigFilename)
         ]
             .filter {
                 fileManager.fileExists(atPath: $0.string)

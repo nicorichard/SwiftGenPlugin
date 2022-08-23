@@ -10,7 +10,7 @@ struct SwiftGenCommandPlugin: CommandPlugin {
         return ([
             context.package.directory.appending(configFile)
         ] + targets.map { target in
-            target.directory.appending("Resources").appending(configFile)
+            target.directory.appending(configFile)
         }).filter {
             fileManager.fileExists(atPath: $0.string)
         }
