@@ -3,8 +3,6 @@ import Foundation
 
 @main
 struct SwiftGenBuildPlugin: BuildToolPlugin {
-    private let swiftGenConfigFilename = "swiftgen.yml"
-
     func createBuildCommands(context: PluginContext, target: Target) throws -> [Command] {
         let fileManager = FileManager.default
 
@@ -15,18 +13,7 @@ struct SwiftGenBuildPlugin: BuildToolPlugin {
         // If a `swiftgen.yml` file is located in the package directory it will be used, and the resulting generated files will be recreated for each target.
         //
         // In addition, if a `swiftgen.yml` is present in the root directory of any target's source files it will be used to generate sources for that target only.
-        let paths: [Path] = [
-            context.package.directory.appending(swiftGenConfigFilename),
-            target.directory.appending(swiftGenConfigFilename)
-        ]
-            .filter {
-                fileManager.fileExists(atPath: $0.string)
-            }
-
-        // Alert the user if they are attempting to use the plugin but have not added a `swiftgen.yml` file
-        if paths.isEmpty {
-            Diagnostics.remark("No SwiftGen configurations found for target \(target.name). If you would like to generate sources for this target include a `swiftgen.yml` in the target's source directory, or include a shared `swiftgen.yml` at the package's root.")
-        }
+        let paths: [Path] = Helper().paths(context: context, targets: [target])
         
         // Clear the SwiftGen plugin's directory
         // Since we are always generating the output from scratch this prevents storing
@@ -55,5 +42,46 @@ struct SwiftGenBuildPlugin: BuildToolPlugin {
                 outputFilesDirectory: swiftGenOutputsDir
             )
         }
+    }
+}
+
+struct Helper {
+    let fileManager = FileManager.default
+    let configFilenames = ["swiftgen.yml", ".swiftgen.yml"]
+
+    /// Automatically discovers SwiftGen config file paths for the given package and selected targets
+    /// If a `swiftgen.yml` file is located in the package directory it will be used, and the resulting generated files will be recreated for each target.
+    ///
+    /// In addition, if a `swiftgen.yml` is present in the root directory of any target's source files it will be used to generate sources for that target only.///
+    func paths(context: PluginContext, targets: [Target]) -> [Path] {
+        let packagePathConfig = configFilenames.map {
+            context.package.directory.appending($0)
+        }.first {
+            fileManager.fileExists(atPath: $0.string)
+        }
+
+        let targetPathConfigs = targets.map { target in
+            configFilenames.map { filename in
+                target.directory.appending(filename)
+            }.first { path in
+                fileManager.fileExists(atPath: path.string)
+            }
+        }
+
+        let paths = [
+            [packagePathConfig],
+            targetPathConfigs
+        ]
+            .flatMap { $0 }
+            .compactMap { $0 }
+            .filter {
+                fileManager.fileExists(atPath: $0.string)
+            }
+
+        if paths.isEmpty {
+            Diagnostics.remark("No SwiftGen configurations found. If you would like to generate sources include a `swiftgen.yml` in a target's source directory, or in the package's root.")
+        }
+
+        return paths
     }
 }

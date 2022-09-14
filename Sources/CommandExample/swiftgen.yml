@@ -1,6 +1,9 @@
+input_dir: Resources
+output_dir: Generated
+
 strings:
   inputs:
     - Base.lproj
   outputs:
     - templateName: structured-swift5
-      output: ${DERIVED_SOURCES_DIR}/Strings.generated.swift
+      output: Strings.generated.swift

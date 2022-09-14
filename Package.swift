@@ -32,12 +32,12 @@ let package = Package(
         ),
         .executableTarget(
             name: "BuildToolExample",
-            exclude: ["Resources/swiftgen.yml"],
+            exclude: ["swiftgen.yml"],
             plugins: ["BuildTool"]
         ),
         .executableTarget(
             name: "CommandExample",
-            exclude: ["Resources/swiftgen.yml"],
+            exclude: ["swiftgen.yml"],
             plugins: ["Run SwiftGen"]
         ),
         .binaryTarget(
