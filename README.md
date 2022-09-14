@@ -10,7 +10,7 @@ Until issues are resolved which pin Xcode at 100% CPU this repository includes a
 
 ## Usage
 
-### Adding The Plugin
+### Adding The Build Plugin
 
 Add the dependency to your `Package.swift` and include the plugin on any targets for which you would like it to run
 
@@ -23,7 +23,7 @@ Add the dependency to your `Package.swift` and include the plugin on any targets
             name: "YourTargetName",
             dependencies: [],
             plugins: [
-                .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin")
+                .plugin(name: "SwiftGenBuildPlugin", package: "SwiftGenPlugin")
             ]
         )
     ]
